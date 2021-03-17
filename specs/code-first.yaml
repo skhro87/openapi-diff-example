@@ -1,0 +1,120 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: 'http://localhost:8080'
+    description: Generated server url
+paths:
+  /skills:
+    put:
+      tags:
+        - skills-controller
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillsPutReqDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SkillsPutResDto'
+  '/skills/{id}':
+    get:
+      tags:
+        - skills-controller
+      operationId: byId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SkillsByIdResDto'
+    post:
+      tags:
+        - skills-controller
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillsPostReqDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    Skill:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    SkillsPutReqDto:
+      required:
+        - skill
+      type: object
+      properties:
+        skill:
+          $ref: '#/components/schemas/Skill'
+    SkillsPutResDto:
+      required:
+        - skill
+      type: object
+      properties:
+        skill:
+          $ref: '#/components/schemas/Skill'
+    SkillsPostReqDto:
+      required:
+        - skill
+      type: object
+      properties:
+        skill:
+          $ref: '#/components/schemas/Skill'
+    SkillsResDto:
+      required:
+        - skills
+      type: object
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
+    SkillsByIdResDto:
+      required:
+        - skill
+      type: object
+      properties:
+        skill:
+          $ref: '#/components/schemas/Skill'
